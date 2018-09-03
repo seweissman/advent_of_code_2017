@@ -4,25 +4,6 @@ Day 9: Stream Processing
 
 import enum
 
-def remove_ignored(stream):
-    stream_out = ""
-    ignore_next = False
-    for s in stream:
-        if ignore_next:
-            ignore_next = False
-            continue
-        if s == "!":
-            ignore_next = True
-        else:
-            ignore_next = False
-            stream_out += s
-    return stream_out
-
-
-assert remove_ignored("<{!>}>") == "<{}>"
-assert remove_ignored("{{<!>},{<!>},{<!>},{<a>}}") == "{{<},{<},{<},{<a>}}"
-
-
 class State(enum.Enum):
     BEGIN = 1
     GROUP = 2
@@ -50,7 +31,6 @@ def process_stream(stream):
                 group_count += 1
             elif curr_state == State.GARBAGE:
                 garbage_count += 1
-                pass
             elif curr_state == State.IGNORE:
                 curr_state = state_stack.pop()
         elif s == "}":
@@ -62,10 +42,8 @@ def process_stream(stream):
                 group_count -= 1
             elif curr_state == State.GARBAGE:
                 garbage_count += 1
-                pass
             elif curr_state == State.IGNORE:
                 curr_state = state_stack.pop()
-                pass
         elif s == "<":
             if curr_state == State.BEGIN:
                 state_stack.append(curr_state)
@@ -75,7 +53,6 @@ def process_stream(stream):
                 curr_state = State.GARBAGE
             elif curr_state == State.GARBAGE:
                 garbage_count += 1
-                pass
             elif curr_state == State.IGNORE:
                 curr_state = state_stack.pop()
         elif s == ">":
