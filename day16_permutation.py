@@ -74,6 +74,7 @@ if __name__ == "__main__":
         print("".join(dance(d, instructions)))
         d = deque("abcdefghijklmnop")
         c = find_cycle(d, instructions)
+        print("Cycle length =", c)
         # one billion steps mod cycle size
         n = 1000000000 % c
         d = deque("abcdefghijklmnop")
