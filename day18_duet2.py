@@ -83,8 +83,9 @@ class Machine:
                 self.instruction_pointer += 1
         return self.State.EXECUTING
 
-    def receive(self,v):
+    def receive(self, v):
         self.receive_queue.appendleft(v)
+
 
 def run_machines(machine0, machine1):
     while True:
